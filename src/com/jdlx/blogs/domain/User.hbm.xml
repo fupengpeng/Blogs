@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.jdlx.blogs.domain.User" table="blogs_user">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="nickName" length="32"></property>
+		<property name="name" length="32"></property>
+		<property name="birthday" length="32"></property>
+		<property name="gender" length="32"></property>
+		<property name="province" length="32"></property>
+		<property name="city" length="128"></property>
+		<property name="county" length="32"></property>
+		<property name="address" length="32"></property>
+		<property name="phoneNumber" length="32"></property>
+		<property name="emailAddress" length="32"></property>
+		<property name="loginPassword" length="128"></property>
+		<property name="loginID" length="32"></property>
+		<property name="IDCardNumber" length="32"></property>
+		<property name="weChatAccount" length="32"></property>
+		<property name="QQAccount" length="32"></property>
+		<property name="imageUrl"></property>
+		<property name="registerTime"></property>
+
+		<!-- 用户和部门的关系(多对一) -->
+		<!-- <many-to-one name="department" class="cn.itcast.oa.domain.Department" 
+			column="departmentId"></many-to-one> -->
+		<!-- 用户和岗位的关系(多对多) -->
+		<!-- <set name="roles" table="itcast_user_role" lazy="false"> <key column="userId"></key> 
+			<many-to-many class="cn.itcast.oa.domain.Role" column="roleId"></many-to-many> 
+			</set> -->
+	</class>
+
+</hibernate-mapping>
