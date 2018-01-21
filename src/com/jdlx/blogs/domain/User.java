@@ -5,11 +5,11 @@ import java.util.Date;
 /**
  * 
  * @Title: User
- * @Description: ÓÃ»§ÊµÌå
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ·å®ä½“
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç1:41:16
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ1:41:16
  */
 public class User {
 
@@ -18,71 +18,73 @@ public class User {
 	 */
 	private Long id;
 	/**
-	 * êÇ³Æ
+	 * æ˜µç§°
 	 */
 	private String nickName;
 	/**
-	 * ĞÕÃû
+	 * å§“å
 	 */
 	private String name;
 	/**
-	 * ÉúÈÕ
+	 * ç”Ÿæ—¥
 	 */
 	private Date birthday;
 	/**
-	 * ĞÔ±ğ
+	 * æ€§åˆ«
 	 */
 	private String gender;
 	/**
-	 * Ê¡
+	 * çœ
 	 */
 	private String province;
 	/**
-	 * ÊĞ
+	 * å¸‚
 	 */
 	private String city;
 	/**
-	 * Çø/ÏØ
+	 * åŒº/å¿
 	 */
 	private String county;
 	/**
-	 * µØÖ·
+	 * åœ°å€
 	 */
 	private String address;
 	/**
-	 * µç»°ºÅÂë
+	 * ç”µè¯å·ç 
 	 */
 	private String phoneNumber;
 	/**
-	 * ÓÊÏäµØÖ·
+	 * é‚®ç®±åœ°å€
 	 */
 	private String emailAddress;
 	/**
-	 * µÇÂ¼ÃÜÂë
-	 */
-	private String loginPassword;
-	/**
-	 * µÇÂ¼ÕËºÅ
+	 * ç™»å½•è´¦å·
 	 */
 	private String loginID;
+
 	/**
-	 * Éí·İÖ¤ºÅ
+	 * ç™»å½•å¯†ç 
+	 */
+	private String loginPassword;
+
+	/**
+	 * èº«ä»½è¯å·
 	 */
 	private String IDCardNumber;
 	/**
-	 * Î¢ĞÅÕËºÅ
+	 * å¾®ä¿¡è´¦å·
 	 */
 	private String weChatAccount;
 	/**
-	 * QQÕËºÅ
+	 * QQè´¦å·
 	 */
 	private String QQAccount;
 	/**
-	 * Í¼ÏñµØÖ·
+	 * å›¾åƒåœ°å€
 	 */
 	private String imageUrl;
 	/**
-	 * ×¢²áÊ±¼ä
+	 * æ³¨å†Œæ—¶é—´
 	 */
 	private Date registerTime;
 
@@ -174,20 +176,20 @@ public class User {
 		this.emailAddress = emailAddress;
 	}
 
-	public String getLoginPassword() {
-		return loginPassword;
-	}
-
-	public void setLoginPassword(String loginPassword) {
-		this.loginPassword = loginPassword;
-	}
-
 	public String getLoginID() {
 		return loginID;
 	}
 
 	public void setLoginID(String loginID) {
 		this.loginID = loginID;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
 	}
 
 	public String getIDCardNumber() {
@@ -228,6 +230,19 @@ public class User {
 
 	public void setRegisterTime(Date registerTime) {
 		this.registerTime = registerTime;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", nickName=" + nickName + ", name=" + name
+				+ ", birthday=" + birthday + ", gender=" + gender
+				+ ", province=" + province + ", city=" + city + ", county="
+				+ county + ", address=" + address + ", phoneNumber="
+				+ phoneNumber + ", emailAddress=" + emailAddress + ", loginID="
+				+ loginID + ", loginPassword=" + loginPassword
+				+ ", IDCardNumber=" + IDCardNumber + ", weChatAccount="
+				+ weChatAccount + ", QQAccount=" + QQAccount + ", imageUrl="
+				+ imageUrl + ", registerTime=" + registerTime + "]";
 	}
 
 }

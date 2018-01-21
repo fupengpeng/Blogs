@@ -1,23 +1,24 @@
 package com.jdlx.blogs.base;
 
 
+
 /**
  * 
  * @Title: BaseResponse
- * @Description: Í¨ÓÃÏìÓ¦ BaseResponse
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: é€šç”¨å“åº” BaseResponse
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç6:28:35
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ6:28:35
  */
 public class BaseResponse {
 	
 	/**
-	 * ³É¹¦£º0     Ê§°Ü£º1
+	 * æˆåŠŸï¼š0     å¤±è´¥ï¼š1
 	 */
 	private int code;
 	/**
-	 * code·µ»Ø1Ê±£¬Ğ¯´øÊ§°ÜĞÅÏ¢
+	 * codeè¿”å›1æ—¶ï¼Œæºå¸¦å¤±è´¥ä¿¡æ¯
 	 */
 	private String info;
 	public int getCode() {
@@ -32,8 +33,9 @@ public class BaseResponse {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "BaseResponse [code=" + code + ", info=" + info + "]";
+	}
+
 }

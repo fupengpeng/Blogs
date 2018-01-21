@@ -6,29 +6,39 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
+import com.alibaba.fastjson.JSON;
 import com.jdlx.blogs.base.BaseServlet;
 import com.jdlx.blogs.domain.User;
 import com.jdlx.blogs.response.LoginResponse;
-import com.jdlx.blogs.utils.HibernateUtil;
+import com.jdlx.blogs.response.ReturnStringResponse;
 
 /**
  * 
  * @Title: UserServlet
- * @Description: ÓÃ»§Ä£¿é
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ·æ¨¡å—
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç3:26:01
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ3:26:01
  */
+
 public class UserServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * @Description: µÇÂ¼
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final int REQUEST_SUCCESS = 0;
+	private static final int REQUEST_FAILURE = 1;
+
+	private String responseString = null;
+
+	ReturnStringResponse returnStringResponse = new ReturnStringResponse();
+
+	/**
+	 * 
+	 * @Description: ç™»å½•
 	 *               http://localhost:8080/Blogs/UserServlet?method=login&account
 	 *               =zhangsan&password=123456
 	 * @Title: login
@@ -41,51 +51,46 @@ public class UserServlet extends BaseServlet {
 	 */
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.»ñÈ¡µ½¿Í»§¶Ë´«µİ¹ıÀ´µÄÓÃ»§ÕËºÅºÍÃÜÂë
-		String loginID = request.getParameter("account");
-		String loginPassword = request.getParameter("password");
-		// 2.ÅĞ¶ÏÓÃ»§ÊÇ·ñµÇÂ¼³É¹¦
-		
-		LoginResponse loginResponse = userService.login(loginID,loginPassword);
-		
-		
-//		Session session = null;
-//		Transaction tx = null;
-//		try {
-//		    session = HibernateUtil.getSessionObject();
-//		    tx = session.beginTransaction();
-//			
-//			
-//			//1 ´´½¨query¶ÔÏó
-//			Query query = session.createQuery("select count(*) from Customer");
-//			
-//			//2 µ÷ÓÃ·½·¨µÃµ½½á¹û
-//			//query¶ÔÏóÀïÃæÓĞ·½·¨£¬Ö±½Ó·µ»Ø¶ÔÏóĞÎÊ½
-//			Object obj = query.uniqueResult();
-//			
-//			System.out.println(((Long) obj).intValue());
-//			
-//			tx.commit();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			tx.rollback();
-//		}finally {
-//			session.close();
-//		}
-		
-		if ("zhangsan".equals(loginID) && "123456".equals(loginPassword)) {
-			System.out.println("µÇÂ¼³É¹¦");
-			return "denglu chenggong";
-		} else {
-			System.out.println("µÇÂ¼Ê§°Ü");
-			return "denglu shibai";
+		// 1.è·å–åˆ°å®¢æˆ·ç«¯ä¼ é€’è¿‡æ¥çš„ç”¨æˆ·è´¦å·å’Œå¯†ç 
+		String phoneNumber = request.getParameter("phoneNumber");
+		String loginPassword = request.getParameter("loginPassword");
+		System.out.println("æ¥æ”¶æ•°æ®  phoneNumber = " + phoneNumber
+				+ "    loginPassword = " + loginPassword);
+
+		LoginResponse loginResponse = userService.login(phoneNumber,
+				loginPassword);
+
+		System.out.println("loginResponse = " + loginResponse.toString());
+
+		if (phoneNumber != null && loginPassword != null) {
+			if (loginResponse.getData() != null) {
+				loginResponse.setCode(REQUEST_SUCCESS);
+				loginResponse.setInfo("ç™»å½•æˆåŠŸï¼");
+				responseString = JSON.toJSONString(loginResponse);
+				System.out.println("loginResponse = " + responseString);
+
+				return responseString;
+			} else {
+				loginResponse.setCode(REQUEST_FAILURE);
+				loginResponse.setInfo("ç™»å½•å¤±è´¥ï¼");
+				responseString = JSON.toJSONString(loginResponse);
+				System.out.println("loginResponse = " + responseString);
+				return responseString;
+			}
+		}else {
+			loginResponse.setCode(REQUEST_SUCCESS);
+			loginResponse.setInfo("è¯·è¾“å…¥è´¦å·å¯†ç è¿›è¡Œç™»å½•ï¼");
+			responseString = JSON.toJSONString(loginResponse);
+			System.out.println("loginResponse = " + responseString);
+			return responseString;
 		}
+		
 
 	}
 
 	/**
 	 * 
-	 * @Description: ×¢²á
+	 * @Description: æ³¨å†Œ
 	 *               http://localhost:8080/Blogs/UserServlet?method=register&account
 	 *               =zhangsan&phonenumber=17712345678
 	 * @Title: register
@@ -98,11 +103,42 @@ public class UserServlet extends BaseServlet {
 	 */
 	public String register(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 1.»ñÈ¡µ½´«µİ¹ıÀ´µÄÊı¾İ
-		String name = request.getParameter("account");
-		String phonenumber = request.getParameter("phonenumber");
-		// 2.±£´æÖÁÊı¾İ£¬·µ»Ø×¢²á³É¹¦
-		return "zhuce chenggong";
+		// 1.è·å–åˆ°ä¼ é€’è¿‡æ¥çš„æ•°æ®
+		String phoneNumber = request.getParameter("phoneNumber");
+		String verificationCode = request.getParameter("verificationCode");
+		String loginPassword = request.getParameter("loginPassword");
+	
+
+		if (phoneNumber != null && verificationCode != null && loginPassword != null) {
+			if ("1234".equals(verificationCode)) {
+				User user = new User();
+				user.setPhoneNumber(phoneNumber);
+				user.setLoginPassword(loginPassword);
+				if (userService.register(user)) {
+					returnStringResponse.setCode(REQUEST_SUCCESS);
+					returnStringResponse.setInfo("æ³¨å†ŒæˆåŠŸï¼");
+					responseString = JSON.toJSONString(returnStringResponse);
+					return responseString;
+				} else {
+					returnStringResponse.setCode(REQUEST_FAILURE);
+					returnStringResponse.setInfo("æ³¨å†Œå¤±è´¥ï¼");
+					responseString = JSON.toJSONString(returnStringResponse);
+					return responseString;
+				}
+			} else {
+				returnStringResponse.setCode(REQUEST_SUCCESS);
+				returnStringResponse.setInfo("éªŒè¯ç é”™è¯¯ï¼");
+				responseString = JSON.toJSONString(returnStringResponse);
+				return responseString;
+			}
+		}else {
+			returnStringResponse.setCode(REQUEST_SUCCESS);
+			returnStringResponse.setInfo("è¯·è¾“å…¥æ‰‹æœºå·ã€æ­£ç¡®çš„éªŒè¯ç ã€å¯†ç è¿›è¡Œæ³¨å†Œï¼");
+			responseString = JSON.toJSONString(returnStringResponse);
+			return responseString;
+		}
+		
+
 	}
 
 }

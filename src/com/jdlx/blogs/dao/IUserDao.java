@@ -4,18 +4,19 @@ import com.jdlx.blogs.base.IBaseDao;
 import com.jdlx.blogs.domain.User;
 import com.jdlx.blogs.response.LoginResponse;
 
-
 /**
  * 
  * @Title: IUserDao
- * @Description: ÓÃ»§ Dao½Ó¿Ú
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ· Daoæ¥å£
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:41:53
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:41:53
  */
-public interface IUserDao extends IBaseDao<User>{
-	
-	public LoginResponse login(String loginID,String loginPassword);
+public interface IUserDao extends IBaseDao {
+
+	public LoginResponse login(String phoneNumber, String loginPassword);
+
+	public boolean register(User user);
 
 }

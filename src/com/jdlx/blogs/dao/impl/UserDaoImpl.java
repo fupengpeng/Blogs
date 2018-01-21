@@ -1,5 +1,7 @@
 package com.jdlx.blogs.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,43 +10,70 @@ import com.jdlx.blogs.base.BaseDaoImpl;
 import com.jdlx.blogs.dao.IUserDao;
 import com.jdlx.blogs.domain.User;
 import com.jdlx.blogs.response.LoginResponse;
-
+import com.jdlx.blogs.response.ReturnStringResponse;
+import com.jdlx.blogs.utils.JDBCUtil;
 
 /**
  * 
  * @Title: UserDaoImpl
- * @Description: ÓÃ»§ DaoÊµÏÖ
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ· Daoå®ç°
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:56:25
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:56:25
  */
 @SuppressWarnings("unchecked")
-public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
+public class UserDaoImpl extends BaseDaoImpl implements IUserDao {
+	String sql = null;
+	ResultSet rs = null;
 
 	@Override
-	public LoginResponse login(String loginID, String loginPassword) {
-		// TODO ¸ù¾İ´«ÈëµÄÓÃ»§µÇÂ¼ÕËºÅºÍÃÜÂë²éÑ¯Êı¾İ¿â£¬ÊÇ·ñÓĞÊı¾İ£¬ÓĞÌí¼Óµ½ÏìÓ¦¶ÔÏóÖĞ£¬ÎŞÔò²»½øĞĞÌí¼Ó£¬Ö±½Ó·µ»ØÏìÓ¦¶ÔÏó¡£
+	public LoginResponse login(String phoneNumber, String loginPassword) {
+		// TODO æ ¹æ®ä¼ å…¥çš„ç”¨æˆ·ç™»å½•è´¦å·å’Œå¯†ç æŸ¥è¯¢æ•°æ®åº“ï¼Œæ˜¯å¦æœ‰æ•°æ®ï¼Œæœ‰æ·»åŠ åˆ°å“åº”å¯¹è±¡ä¸­ï¼Œæ— åˆ™ä¸è¿›è¡Œæ·»åŠ ï¼Œç›´æ¥è¿”å›å“åº”å¯¹è±¡ã€‚
 		LoginResponse loginResponse = new LoginResponse();
+		User user = new User();
+		System.out.println("æ•°æ®åº“æ“ä½œï¼ŒæŸ¥è¯¢ç”¨æˆ·ã€‚è·å–åˆ°çš„æ•°æ® phoneNumber = " + phoneNumber
+				+ "    loginPassword = " + loginPassword);
 		
-		//3.Ğ´¾ßÌåµÄcrud²Ù×÷
-        //3-1.Ìõ¼ş²éÑ¯
-		String hql = "from User where loginID=? and loginPassword=?";
-        Query query = this.getSession().createQuery(hql);
-        //3-2.ÉèÖÃÌõ¼ş
-        //²ÎÊı1£º? µÄÎ»ÖÃ£¬´Ó 0 ¿ªÊ¼    ²ÎÊı2£º? µÄÖµ
-        query.setParameter(0, loginID);
-        query.setParameter(1, loginPassword);
-        //3-3.µ÷ÓÃ·½·¨µÃµ½½á¹û
-        List<User> list = query.list();
-        for (User user : list) {
-        	loginResponse.setUser(user);
-            System.out.println(user.toString());
-        }
-		
+		sql = "select * from blogs_user where phoneNumber='" + phoneNumber
+				+ "' and loginPassword='" + loginPassword + "'";
+		rs = JDBCUtil.executeQuery(sql);
+		try {
+			while (rs.next()) {
+				user.setId(rs.getLong(1));
+				user.setNickName(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setBirthday(rs.getDate(4));
+				user.setGender(rs.getString(5));
+				user.setProvince(rs.getString(6));
+				user.setCity(rs.getString(7));
+				user.setCounty(rs.getString(8));
+				user.setAddress(rs.getString(9));
+				user.setPhoneNumber(rs.getString(10));
+				user.setEmailAddress(rs.getString(11));
+				user.setLoginID(rs.getString(12));
+				user.setLoginPassword(rs.getString(13));
+				user.setIDCardNumber(rs.getString(14));
+				user.setWeChatAccount(rs.getString(15));
+				user.setQQAccount(rs.getString(16));
+				user.setImageUrl(rs.getString(17));
+				user.setRegisterTime(rs.getDate(18));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, JDBCUtil.getPs(), JDBCUtil.getConnection());
+		}
+		loginResponse.setData(user);
 		return loginResponse;
 	}
 
-
+	@Override
+	public boolean register(User user) {
+		sql = "insert into blogs_user (phoneNumber,loginPassword) VALUES ('"
+				+ user.getPhoneNumber()
+				+ "','" + user.getLoginPassword() + "')";
+		return this.insert(sql);
+	}
 
 }

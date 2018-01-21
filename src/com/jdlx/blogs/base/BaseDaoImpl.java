@@ -1,74 +1,62 @@
 package com.jdlx.blogs.base;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Properties;
+import java.sql.ResultSet;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
-
+import com.jdlx.blogs.utils.JDBCUtil;
 
 /**
  * 
  * @Title: BaseDaoImpl
- * @Description: Í¨ÓÃDao½Ó¿ÚÊµÏÖÀà
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: é€šç”¨Daoæ¥å£å®ç°ç±»
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:36:36
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:36:36
  */
-@SuppressWarnings("unchecked")
-public class BaseDaoImpl<T> implements IBaseDao<T> {
-	
-	private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-	
-	private Class<T> clazz;
-	
-	public BaseDaoImpl() {
-		//»ñµÃÊµÌåÀàĞÍ
-		ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();//»ñµÃÕæÕıµÄ¸¸Àà
-		Type[] types = genericSuperclass.getActualTypeArguments();
-		clazz = (Class<T>) types[0];
-	}
-	
-	public void save(T entity) {
-		getSession().save(entity);
-	}
-	
-	public void delete(Long id) {
-		getSession().delete(getSession().get(clazz, id));
-	}
-	
-	public void update(T entity) {
-		getSession().update(entity);
+public class BaseDaoImpl implements IBaseDao {
+
+	boolean isSuccess = false;
+
+	public boolean insert(String sql) {
+		try {
+			JDBCUtil.executeUpdate(sql);
+			isSuccess = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 
-	public List<T> findAll() {
-		String hql = "FROM " + clazz.getSimpleName();
-		return getSession().createQuery(hql).list();
+	public boolean delete(String sql) {
+		try {
+			JDBCUtil.executeUpdate(sql);
+			isSuccess = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 
-	public T getById(Long id) {
-		return (T) getSession().get(clazz, id);
+	public boolean update(String sql) {
+		try {
+			JDBCUtil.executeUpdate(sql);
+			isSuccess = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
-	
-	public List<T> getByIds(Long[] ids) {
-		String hql = "FROM " + clazz.getSimpleName() + " WHERE id in (:ids)";
-		Query query = getSession().createQuery(hql);
-		query.setParameterList("ids", ids);//Ò»´Î¸³Öµ¶à¸ö
-		return query.list();
+
+	public ResultSet select(String sql) {
+		return JDBCUtil.executeQuery(sql);
 	}
-	
-	public Session getSession(){
-		return sessionFactory.getCurrentSession();
+
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 
 }

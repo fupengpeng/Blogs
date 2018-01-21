@@ -3,25 +3,29 @@ package com.jdlx.blogs.response;
 import com.jdlx.blogs.base.BaseResponse;
 import com.jdlx.blogs.domain.User;
 
-
 /**
  * 
  * @Title: LoginResponse
- * @Description: µÇÂ¼ÏìÓ¦
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç™»å½•å“åº”
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç6:32:17
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ6:32:17
  */
 public class LoginResponse extends BaseResponse {
-	private User user;
+	private User data;
 
-	public User getUser() {
-		return user;
+	public User getData() {
+		return data;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setData(User data) {
+		this.data = data;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "LoginResponse [data=" + data + "]";
+	}
+
 }

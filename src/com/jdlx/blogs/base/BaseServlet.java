@@ -3,62 +3,61 @@ package com.jdlx.blogs.base;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jdlx.blogs.service.IUserService;
+import com.jdlx.blogs.service.impl.UserServiceImpl;
 
 /**
  * 
  * @Title: BaseServlet
- * @Description: Í¨ÓÃ¸¸ÀàBaseServlet
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: é€šç”¨çˆ¶ç±»BaseServlet
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç3:22:43
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ3:22:43
  */
 public class BaseServlet extends HttpServlet {
-	
-	@Resource
-	protected IUserService userService;
-	
+
+	protected IUserService userService = new UserServiceImpl();
 
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
-		// 1¡¢»ñµÃÖ´ĞĞµÄ·½·¨Ãû
+		// 1ã€è·å¾—æ‰§è¡Œçš„æ–¹æ³•å
 		String methodName = request.getParameter("method");
-		// Ä¬ÈÏ·½·¨
+		// é»˜è®¤æ–¹æ³•
 		if (methodName == null) {
 			methodName = "execute";
 		}
 
-		System.out.println("BaseServlet : ±¾´ÎËùÖ´ĞĞ·½·¨ :  " + methodName);
+		System.out.println("BaseServlet : æœ¬æ¬¡æ‰€æ‰§è¡Œæ–¹æ³• :  " + methodName);
 
 		try {
-			// 2¡¢Í¨¹ı·´Éä»ñµÃµ±Ç°ÔËĞĞÀàÖĞÖ¸¶¨·½·¨,ĞÎÊ½²ÎÊı
+			// 2ã€é€šè¿‡åå°„è·å¾—å½“å‰è¿è¡Œç±»ä¸­æŒ‡å®šæ–¹æ³•,å½¢å¼å‚æ•°
 			Method executeMethod = this.getClass().getMethod(methodName,
 					HttpServletRequest.class, HttpServletResponse.class);
-			// 3¡¢·´ÉäÖ´ĞĞ·½·¨
+			// 3ã€åå°„æ‰§è¡Œæ–¹æ³•
 			String result = (String) executeMethod.invoke(this, request,
 					response);
-			// 4¡¢½«jsonÊı¾İ·µ»Ø
+			System.out.println("BaseServlet : åå°„æ‰§è¡Œæ–¹æ³• :  " + result);
+			// 4ã€å°†jsonæ•°æ®è¿”å›
 			response.getWriter().write(result);
 		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("Î´Öª·½·¨  : " + methodName);
+			throw new RuntimeException("æœªçŸ¥æ–¹æ³•  : " + methodName);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("·şÎñÆ÷Òì³£", e);
+			throw new RuntimeException("æœåŠ¡å™¨å¼‚å¸¸", e);
 		}
 	}
 
 	/**
-	 * Ä¬ÈÏÖ´ĞĞ·½·¨
+	 * é»˜è®¤æ‰§è¡Œæ–¹æ³•
 	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

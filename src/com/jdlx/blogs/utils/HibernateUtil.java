@@ -4,20 +4,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
 /**
  * 
  * @Title: HibernateUtil
- * @Description: hibernate¹¤¾ßÀà
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: hibernateå·¥å…·ç±»
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç4:49:07
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ4:49:07
  */
 public class HibernateUtil {
-	
+
 	/**
-	 * ÓÃÓÚÉú²úSessionFactory¶ÔÏó SessionFactory¶ÔÏó²úÉúºÄ×ÊÔ´£¬¹ÊÖ»Éú²úÒ»¸öSessionFactory¶ÔÏó
+	 * ç”¨äºç”Ÿäº§SessionFactoryå¯¹è±¡ SessionFactoryå¯¹è±¡äº§ç”Ÿè€—èµ„æºï¼Œæ•…åªç”Ÿäº§ä¸€ä¸ªSessionFactoryå¯¹è±¡
 	 */
 	private static final Configuration configuration;
 	private static final SessionFactory sessionFactory;
@@ -27,18 +26,18 @@ public class HibernateUtil {
 		sessionFactory = configuration.buildSessionFactory();
 	}
 
-	// Ìá¹©·½·¨·µ»ØÓë±¾µØÏß³Ì°ó¶¨µÄsession¶ÔÏóµÄ·½·¨
+	// æä¾›æ–¹æ³•è¿”å›ä¸æœ¬åœ°çº¿ç¨‹ç»‘å®šçš„sessionå¯¹è±¡çš„æ–¹æ³•
 	public static Session getSessionObject() {
 		return sessionFactory.getCurrentSession();
 	}
 
-	// Ìá¹©·½·¨·µ»ØSessionFactory¶ÔÏó
+	// æä¾›æ–¹æ³•è¿”å›SessionFactoryå¯¹è±¡
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
-//	public static void main(String[] args) {
-//
-//	}
+	// public static void main(String[] args) {
+	//
+	// }
 
 }

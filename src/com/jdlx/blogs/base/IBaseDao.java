@@ -1,45 +1,35 @@
 package com.jdlx.blogs.base;
 
-import java.util.List;
+import java.sql.ResultSet;
 
 /**
  * 
  * @Title: IBaseDao
- * @Description: Í¨ÓÃDao½Ó¿Ú
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: é€šç”¨Daoæ¥å£
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:35:33
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:35:33
  */
-public interface IBaseDao<T> {
+public interface IBaseDao {
 	/**
-	 * Ìí¼Ó
+	 * æ·»åŠ (æ’å…¥)
 	 */
-	public void save(T entity);
-	
+	public boolean insert(String sql);
+
 	/**
-	 * ¸ù¾İidÉ¾³ı
+	 * åˆ é™¤
 	 */
-	public void delete(Long id);
-	
+	public boolean delete(String sql);
+
 	/**
-	 * ¸ù¾İidĞŞ¸Ä
+	 * ä¿®æ”¹
 	 */
-	public void update(T entity);
-	
+	public boolean update(String sql);
+
 	/**
-	 * ¸ù¾İid²éÑ¯
+	 * æŸ¥è¯¢
 	 */
-	public T getById(Long id);
-	
-	/**
-	 * Ò»´Î²éÑ¯¶à¸ö¶ÔÏó
-	 */
-	public List<T> getByIds(Long[] ids);
-	
-	/**
-	 * ²éÑ¯ËùÓĞ
-	 */
-	public List<T> findAll();
+	public ResultSet select(String sql);
 
 }

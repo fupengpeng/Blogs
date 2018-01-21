@@ -3,28 +3,34 @@ package com.jdlx.blogs.service.impl;
 import javax.annotation.Resource;
 
 import com.jdlx.blogs.dao.IUserDao;
+import com.jdlx.blogs.dao.impl.UserDaoImpl;
 import com.jdlx.blogs.domain.User;
 import com.jdlx.blogs.response.LoginResponse;
+import com.jdlx.blogs.response.ReturnStringResponse;
 import com.jdlx.blogs.service.IUserService;
-
 
 /**
  * 
  * @Title: UserServiceImpl
- * @Description: ÓÃ»§ServiceÊµÏÖ
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ·Serviceå®ç°
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:53:19
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:53:19
  */
 public class UserServiceImpl implements IUserService {
-	@Resource
-	private IUserDao userDao;
+
+	private IUserDao userDao = new UserDaoImpl();
 
 	@Override
-	public LoginResponse login(String loginID, String loginPassword) {
+	public LoginResponse login(String phoneNumber, String loginPassword) {
+		return userDao.login(phoneNumber, loginPassword);
+	}
+
+	@Override
+	public boolean register(User user) {
 		// TODO Auto-generated method stub
-		return userDao.login(loginID,loginPassword);
+		return userDao.register(user);
 	}
 
 }

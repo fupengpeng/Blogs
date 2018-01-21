@@ -17,8 +17,8 @@
 		<property name="address" length="32"></property>
 		<property name="phoneNumber" length="32"></property>
 		<property name="emailAddress" length="32"></property>
-		<property name="loginPassword" length="128"></property>
 		<property name="loginID" length="32"></property>
+		<property name="loginPassword" length="128"></property>
 		<property name="IDCardNumber" length="32"></property>
 		<property name="weChatAccount" length="32"></property>
 		<property name="QQAccount" length="32"></property>

@@ -2,20 +2,21 @@ package com.jdlx.blogs.service;
 
 import com.jdlx.blogs.domain.User;
 import com.jdlx.blogs.response.LoginResponse;
-
+import com.jdlx.blogs.response.ReturnStringResponse;
 
 /**
  * 
  * @Title: IUserService
- * @Description: ÓÃ»§Service½Ó¿Ú
- * @Company: É½¶«¾ÅµãÁ¬ÏßĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+ * @Description: ç”¨æˆ·Serviceæ¥å£
+ * @Company: å±±ä¸œä¹ç‚¹è¿çº¿ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
  * @ProjectName: Blogs
  * @author fupengpeng
- * @date 2018Äê1ÔÂ20ÈÕ ÏÂÎç5:51:39
+ * @date 2018å¹´1æœˆ20æ—¥ ä¸‹åˆ5:51:39
  */
 public interface IUserService {
-	
 
-	public LoginResponse login(String loginID, String loginPassword);
+	public LoginResponse login(String phoneNumber, String loginPassword);
+
+	public boolean register(User user);
 
 }
